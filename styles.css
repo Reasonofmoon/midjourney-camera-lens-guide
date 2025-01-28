@@ -1,0 +1,122 @@
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background: #333;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+section {
+    padding: 20px;
+    margin: 0 20px;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+h2 {
+    color: #333;
+}
+
+h3 {
+    color: #444;
+    margin-top: 1rem;
+}
+
+ul, ol {
+    margin-top: 1rem;
+}
+
+li {
+    margin-bottom: 0.5rem;
+}
+
+.element {
+    margin-bottom: 2rem;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #333;
+    color: #fff;
+}
+#interactive-examples {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.example-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"],
+select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+#prompt-output {
+  margin-top: 20px;
+  font-size: 1.1em;
+}
+
+#prompt-text {
+  background-color: #e9ecef;
+  padding: 10px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+/* 반응형 디자인 조정 */
+@media (min-width: 768px) {
+  .example-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  .example-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  #prompt-output {
+    font-size: 1.2em;
+  }
+}
