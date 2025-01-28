@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>미드저니 카메라 렌즈 프롬프트 가이드</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>미드저니 카메라 렌즈 프롬프트 마스터하기</h1>
+        <p>AI 사진 생성의 잠재력을 깨우는 카메라와 렌즈 설정 활용법</p>
+    </header>
+
+    <main>
+        <section id="intro">
+            <h2>들어가며</h2>
+            <p>
+                미드저니에서 카메라와 렌즈 프롬프트를 활용하면 AI가 생성하는 사진의 사실감과 시각적 효과를 크게 향상시킬 수 있습니다.
+                프롬프트에 특정 카메라와 렌즈 정보를 상세히 입력함으로써, 생성된 이미지의 미학과 구도를 원하는 대로 조절할 수 있습니다.
+            </p>
+        </section>
+
+        <section id="key-elements">
+            <h2>카메라 렌즈 프롬프트의 핵심 요소</h2>
+            <div class="element">
+                <h3>카메라 종류</h3>
+                <p>원하는 효과를 얻기 위해 특정 카메라 모델을 프롬프트에 포함시킬 수 있습니다:</p>
+                <ul>
+                    <li>Canon EOS R5</li>
+                    <li>Canon 5D Mark IV</li>
+                    <li>Fujifilm Pro 400H</li>
+                    <li>Kodak Ektachrome E100</li>
+                    <li>Nikon D850</li>
+                    <li>Sony A7 III</li>
+                    <li>Leica M10</li>
+                </ul>
+            </div>
+            
+            <div class="element">
+                <h3>렌즈 종류</h3>
+                <p>렌즈에 따라 다양한 시각적 효과가 만들어집니다:</p>
+                <ul>
+                    <li><strong>어안 렌즈 (Fisheye lens):</strong> 독특한 원형 왜곡을 생성합니다.</li>
+                    <li><strong>광각 렌즈 (Wide-angle lens):</strong> 넓은 시야를 제공합니다.</li>
+                    <li><strong>접사 렌즈 (Macro lens):</strong> 피사체를 가까이에서 세밀하게 묘사합니다.</li>
+                    <li><strong>아나모픽 렌즈 (Anamorphic lens):</strong> 독특한 영화적 효과를 냅니다.</li>
+                    <li><strong>틸트-쉬프트 렌즈 (Tilt-shift lens):</strong> 미니어처 또는 장난감 같은 효과를 줍니다.</li>
+                </ul>
+            </div>
+
+            <div class="element">
+                <h3>렌즈 사양</h3>
+                <p>렌즈 사양을 추가하면 이미지 결과물을 더욱 정교하게 다듬을 수 있습니다:</p>
+                <ul>
+                    <li><strong>초점 거리:</strong> 예: "50mm", "85mm", "24-70mm"</li>
+                    <li><strong>조리개:</strong> 예: "f/1.8", "f/1.4", "f/2.8-4"</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="prompt-structure">
+            <h2>프롬프트 구조</h2>
+            <p>효과적인 미드저니 사진 프롬프트는 다음 요소들을 포함할 수 있습니다:</p>
+            <ol>
+                <li>주제 (Subject)</li>
+                <li>사진 유형, 장면, 또는 환경</li>
+                <li>상세 묘사 또는 고유한 특징</li>
+                <li>카메라 모델</li>
+                <li>렌즈 종류 및 사양</li>
+                <li>카메라 각도 또는 구도</li>
+                <li>조명 상태</li>
+            </ol>
+            <div class="example-box">
+                <p><strong>예시:</strong> "photostudio에서 과장된 움직임을 취하는 여성의 초상화, Canon EOS R5, 매크로 렌즈, 클로즈업 촬영, 차가운 조명 --ar 16:9"</p>
+            </div>
+        </section>
+
+        <section id="interactive-examples">
+            <h2>대화형 프롬프트 생성기</h2>
+            <div class="example-container">
+                <div class="input-group">
+                    <label for="subject">주제:</label>
+                    <input type="text" id="subject" value="고양이">
+                </div>
+
+                <div class="input-group">
+                    <label for="scene">장면:</label>
+                    <input type="text" id="scene" value="창턱에 앉아있는">
+                </div>
+
+                <div class="input-group">
+                    <label for="camera">카메라:</label>
+                    <select id="camera">
+                        <option value="Canon EOS R5">Canon EOS R5</option>
+                        <option value="Canon 5D Mark IV">Canon 5D Mark IV</option>
+                        <option value="Nikon D850">Nikon D850</option>
+                        <option value="Sony A7 III">Sony A7 III</option>
+                        <option value="Fujifilm X-T4">Fujifilm X-T4</option>
+                        <option value="Leica M10">Leica M10</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="lens">렌즈:</label>
+                    <select id="lens">
+                        <option value="50mm f/1.8">50mm f/1.8</option>
+                        <option value="85mm f/1.4">85mm f/1.4</option>
+                        <option value="24-70mm f/2.8">24-70mm f/2.8</option>
+                        <option value="100mm f/2.8 Macro">100mm f/2.8 Macro</option>
+                        <option value="70-200mm f/2.8">70-200mm f/2.8</option>
+                        <option value="16-35mm f/2.8">16-35mm f/2.8</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="lighting">조명:</label>
+                    <select id="lighting">
+                        <option value="golden hour">골든 아워</option>
+                        <option value="blue hour">블루 아워</option>
+                        <option value="studio lighting">스튜디오 조명</option>
+                        <option value="natural light">자연광</option>
+                        <option value="backlit">역광</option>
+                    </select>
+                </div>
+
+                <button id="generate-button">프롬프트 생성</button>
+
+                <div id="prompt-output">
+                    생성된 프롬프트: <span id="prompt-text"></span>
+                </div>
+            </div>
+        </section>
+
+        <section id="tips">
+            <h2>효과적인 프롬프트를 위한 팁</h2>
+            <ul>
+                <li>원하는 효과를 구체적으로 명시하세요.</li>
+                <li>카메라와 렌즈 정보를 조합하여 더욱 정밀한 결과를 얻으세요.</li>
+                <li>추가적인 제어를 위해 카메라 설정을 포함하세요.</li>
+                <li>의도하지 않은 효과를 방지하기 위해 부정형 프롬프트를 활용하세요.</li>
+                <li>원하는 미적 감각을 달성하기 위해 다양한 조합을 실험해 보세요.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 AI 사진 가이드. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
