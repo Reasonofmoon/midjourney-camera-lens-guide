@@ -1,153 +1,700 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>미드저니 카메라 렌즈 프롬프트 가이드</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>생성의 시선 × 카메라·렌즈 프롬프트 가이드 (Midjourney V8.2 기준)</title>
+  <meta name="description" content="샷 사이즈, 앵글, 초점거리, 조리개, 조명, 필름, 광학 효과, 구도까지 150여 개의 카메라 어휘를 한국어·영어로 정리하고, '생성의 시선' 만화 원고 프롬프트와 연결한 가이드. 사진 프롬프트 생성기와 컷 플래너 포함.">
+  <link rel="canonical" href="https://devlog.moonlang.com/midjourney-camera-lens-guide/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="생성의 시선 × 카메라·렌즈 프롬프트 가이드">
+  <meta property="og:description" content="카메라를 고르는 원칙에서 미드저니 V8.2 파라미터까지. 사진 프롬프트 생성기와 만화 컷 플래너 포함.">
+  <meta property="og:url" content="https://devlog.moonlang.com/midjourney-camera-lens-guide/">
+  <meta property="og:site_name" content="Reasonofmoon Devlog">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "생성의 시선 × 카메라·렌즈 프롬프트 가이드",
+    "inLanguage": "ko",
+    "datePublished": "2025-01-28",
+    "dateModified": "2026-10-21",
+    "author": { "@type": "Person", "name": "송세훈 (달의이성, Reasonofmoon)", "url": "https://devlog.moonlang.com/about/" },
+    "publisher": { "@type": "Organization", "name": "Reasonofmoon Devlog", "url": "https://devlog.moonlang.com/" },
+    "about": ["Midjourney", "camera prompts", "cinematography", "manga storyboard"],
+    "url": "https://devlog.moonlang.com/midjourney-camera-lens-guide/"
+  }
+  </script>
 </head>
 <body>
-    <header>
-        <h1>미드저니 카메라 렌즈 프롬프트 마스터하기</h1>
-        <p>AI 사진 생성의 잠재력을 깨우는 카메라와 렌즈 설정 활용법</p>
-    </header>
+  <header class="site-header">
+    <div class="inner">
+      <p class="eyebrow">Reasonofmoon Devlog · Prompt Lab</p>
+      <h1>생성의 시선 × 카메라·렌즈 프롬프트 가이드</h1>
+      <p class="lead">카메라는 장면이 요구할 때 고른다. 샷·앵글·렌즈·조리개·조명·필름·효과·구도 어휘 150여 개를 한국어와 영어로 정리하고, 만화 원고 프롬프트 「생성의 시선」의 원칙과 연결했다. 아래에 사진 프롬프트 생성기와 컷 플래너가 있다.</p>
+      <div class="badges">
+        <span class="badge">v2 · 2026-10-21 갱신</span>
+        <span class="badge">Midjourney V8.2 · Niji 7 기준</span>
+        <span class="badge">GPT·Gemini 계열 이미지 모델에도 적용</span>
+        <span class="badge">빌드 없음 · 정적 HTML</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="toc" aria-label="목차">
+      <h2>목차</h2>
+      <ol>
+        <li><a href="#principles">카메라를 고르는 원칙</a></li>
+        <li><a href="#mapping">생성의 시선 → 카메라 어휘</a></li>
+        <li><a href="#shots">샷 사이즈</a></li>
+        <li><a href="#angles">앵글과 높이</a></li>
+        <li><a href="#lenses">렌즈와 초점거리</a></li>
+        <li><a href="#exposure">조리개·셔터·움직임</a></li>
+        <li><a href="#lighting">조명</a></li>
+        <li><a href="#gear">카메라·필름·프로세스</a></li>
+        <li><a href="#effects">광학 효과</a></li>
+        <li><a href="#composition">구도와 미장센</a></li>
+        <li><a href="#structure">프롬프트 구조와 예시</a></li>
+        <li><a href="#params">V8.2 파라미터</a></li>
+        <li><a href="#generator">생성기 · 컷 플래너</a></li>
+        <li><a href="#tips">팁과 피할 것</a></li>
+        <li><a href="#changelog">갱신 노트 · 출처</a></li>
+      </ol>
+    </nav>
 
     <main>
-        <section id="intro">
-            <h2>들어가며</h2>
-            <p>
-                미드저니에서 카메라와 렌즈 프롬프트를 활용하면 AI가 생성하는 사진의 사실감과 시각적 효과를 크게 향상시킬 수 있습니다.
-                프롬프트에 특정 카메라와 렌즈 정보를 상세히 입력함으로써, 생성된 이미지의 미학과 구도를 원하는 대로 조절할 수 있습니다.
-            </p>
-        </section>
+      <section class="card" id="principles">
+        <h2><span class="num">01</span>카메라를 고르는 원칙</h2>
+        <p>2025년 1월판은 카메라 7종과 렌즈 5종을 나열하는 데서 끝났다. 이번 판은 어휘를 늘리는 것보다 먼저, 어휘를 고르는 기준을 둔다. 기준은 만화 원고 마스터 프롬프트 「생성의 시선」에서 가져왔다. 사진이든 만화 컷이든 같은 기준이 적용된다.</p>
+        <div class="principle"><div class="n">1</div><p><strong>앵글은 장면이 요구할 때 배치한다.</strong> 극단적인 클로즈업, 원경, 뒷모습, 측면, 하이앵글, 로우앵글, 기울어진 원근, 가려진 시점, 인물 없는 공간 컷은 쓸 수 있는 선택지이지 채워야 할 목록이 아니다.</p></div>
+        <div class="principle"><div class="n">2</div><p><strong>카메라와 렌즈의 선택은 작가의 해석이다.</strong> 기술적 고민(초점거리, 심도, 빛)은 해석을 실현하는 수단이다. 해석 없이 스펙만 쌓으면 결과는 카탈로그가 된다.</p></div>
+        <div class="principle"><div class="n">3</div><p><strong>강약은 연출이다.</strong> 얼굴, 손, 핵심 동작에는 밀도를 쏟고, 나머지는 심도·톤·배경 생략으로 힘을 뺀다. 프롬프트에서도 모든 항목을 채우지 않는다. 비워 둔 항목이 강조를 만든다.</p></div>
+        <div class="principle"><div class="n">4</div><p><strong>한 장면을 여러 시점에서 관찰하되, 결론은 하나다.</strong> 같은 순간을 ECU·OTS·부감으로 머릿속에서 돌려 보고, 독자가 "예술적이다"라고 느낄 한 장을 고른다. 생성기의 '컷 플래너'는 이 관찰을 컷 단위로 기록하는 도구다.</p></div>
+        <div class="principle"><div class="n">5</div><p><strong>반복에는 이유가 있어야 한다.</strong> 같은 카메라 조합을 다시 쓰려면 리듬, 대구, 변주의 기준점 같은 이유가 필요하다. 이유 없는 반복은 피한다.</p></div>
+        <div class="note"><strong>글자 문제.</strong> 미드저니는 한국어 레터링이 불안정하다. 말풍선·효과음이 들어가는 출판 원고는 영어 프롬프트로 컷 그림을 만들고 글자는 후편집하거나, 글자 처리가 안정적인 GPT·Gemini 계열 모델에 컷 플래너 출력(한국어)을 그대로 넣는 두 경로를 둔다.</div>
+      </section>
 
-        <section id="key-elements">
-            <h2>카메라 렌즈 프롬프트의 핵심 요소</h2>
-            <div class="element">
-                <h3>카메라 종류</h3>
-                <p>원하는 효과를 얻기 위해 특정 카메라 모델을 프롬프트에 포함시킬 수 있습니다:</p>
-                <ul>
-                    <li>Canon EOS R5</li>
-                    <li>Canon 5D Mark IV</li>
-                    <li>Fujifilm Pro 400H</li>
-                    <li>Kodak Ektachrome E100</li>
-                    <li>Nikon D850</li>
-                    <li>Sony A7 III</li>
-                    <li>Leica M10</li>
-                </ul>
-            </div>
-            
-            <div class="element">
-                <h3>렌즈 종류</h3>
-                <p>렌즈에 따라 다양한 시각적 효과가 만들어집니다:</p>
-                <ul>
-                    <li><strong>어안 렌즈 (Fisheye lens):</strong> 독특한 원형 왜곡을 생성합니다.</li>
-                    <li><strong>광각 렌즈 (Wide-angle lens):</strong> 넓은 시야를 제공합니다.</li>
-                    <li><strong>접사 렌즈 (Macro lens):</strong> 피사체를 가까이에서 세밀하게 묘사합니다.</li>
-                    <li><strong>아나모픽 렌즈 (Anamorphic lens):</strong> 독특한 영화적 효과를 냅니다.</li>
-                    <li><strong>틸트-쉬프트 렌즈 (Tilt-shift lens):</strong> 미니어처 또는 장난감 같은 효과를 줍니다.</li>
-                </ul>
-            </div>
+      <section class="card" id="mapping">
+        <h2><span class="num">02</span>「생성의 시선」의 아홉 가지 시점 → 카메라 어휘</h2>
+        <p>마스터 프롬프트가 허용한 아홉 가지 시점을 영어 프롬프트 키워드로 옮기고, 각 시점을 꺼낼 순간과 효과를 적었다.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>생성의 시선 지시</th><th>프롬프트 키워드</th><th>꺼내는 순간</th><th>효과</th></tr></thead>
+            <tbody>
+              <tr><td>극단적인 클로즈업</td><td><span class="kw">extreme close-up, macro detail of the eyes / hands</span></td><td>감정의 정점, 결정의 순간, 단서 제시</td><td>몰입, 긴장, 친밀</td></tr>
+              <tr><td>원경</td><td><span class="kw">extreme long shot, establishing shot, tiny figure in a vast landscape</span></td><td>장면 도입, 고립이나 규모, 호흡을 쉬게 할 때</td><td>거리두기, 외로움, 스케일</td></tr>
+              <tr><td>뒷모습</td><td><span class="kw">seen from behind, back view, following shot</span></td><td>인물이 보는 것을 독자도 보게 할 때, 떠남</td><td>관찰자 시점, 여운</td></tr>
+              <tr><td>측면</td><td><span class="kw">profile view, side view</span></td><td>두 인물의 대립, 이동 방향 강조</td><td>객관, 대립, 방향성</td></tr>
+              <tr><td>하이앵글(부감)</td><td><span class="kw">high angle, looking down, top-down</span></td><td>무력감, 전체 배치 설명</td><td>약화, 조망</td></tr>
+              <tr><td>로우앵글(앙각)</td><td><span class="kw">low angle, looking up, worm's-eye view</span></td><td>위압, 권위, 등장</td><td>강화, 위협, 영웅성</td></tr>
+              <tr><td>기울어진 원근</td><td><span class="kw">Dutch angle, canted frame, exaggerated perspective</span></td><td>불안, 충격, 혼란</td><td>불안정, 긴장</td></tr>
+              <tr><td>가려진 시점</td><td><span class="kw">obstructed view, peeking through foreground objects, partially hidden</span></td><td>엿보기, 비밀, 거리감</td><td>관음, 서스펜스</td></tr>
+              <tr><td>인물 없는 공간 컷</td><td><span class="kw">empty frame, environment only, still life insert, pillow shot</span></td><td>침묵, 시간 경과, 감정의 여운</td><td>여백, 정적, 쉼</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
-            <div class="element">
-                <h3>렌즈 사양</h3>
-                <p>렌즈 사양을 추가하면 이미지 결과물을 더욱 정교하게 다듬을 수 있습니다:</p>
-                <ul>
-                    <li><strong>초점 거리:</strong> 예: "50mm", "85mm", "24-70mm"</li>
-                    <li><strong>조리개:</strong> 예: "f/1.8", "f/1.4", "f/2.8-4"</li>
-                </ul>
-            </div>
-        </section>
+      <section class="card" id="shots">
+        <h2><span class="num">03</span>샷 사이즈</h2>
+        <p>프레임에 인물을 얼마나 담는가. 만화에서는 컷의 크기와 함께 결정되며, 큰 컷일수록 작은 샷(클로즈업)이 강해지고 작은 컷일수록 넓은 샷이 답답해진다.</p>
+        <figure class="diagram" aria-label="샷 사이즈 사다리">
+          <svg viewBox="0 0 780 268" xmlns="http://www.w3.org/2000/svg" role="img">
+            <title>같은 인물을 ECU부터 ELS까지 여섯 단계로 자르는 프레임</title>
+            <g id="figure-def">
+              <symbol id="fig" viewBox="0 0 60 180">
+                <circle cx="30" cy="22" r="14" class="svg-ink"/>
+                <circle cx="25" cy="20" r="1.6" class="svg-fill"/><circle cx="35" cy="20" r="1.6" class="svg-fill"/>
+                <path d="M30 36 L30 100 M30 48 L10 86 M30 48 L50 86 M30 100 L16 170 M30 100 L44 170" class="svg-ink"/>
+              </symbol>
+            </g>
+            <!-- panels -->
+            <g transform="translate(10 10)">
+              <rect x="0" y="0" width="115" height="200" class="svg-frame"/>
+              <use href="#fig" x="27" y="10" width="60" height="180"/>
+              <rect x="42" y="24" width="30" height="14" class="svg-accent"/>
+              <text x="57" y="228" text-anchor="middle" class="svg-label-strong">ECU</text>
+              <text x="57" y="242" text-anchor="middle" class="svg-label">익스트림 클로즈업</text>
+            </g>
+            <g transform="translate(138 10)">
+              <rect x="0" y="0" width="115" height="200" class="svg-frame"/>
+              <use href="#fig" x="27" y="10" width="60" height="180"/>
+              <rect x="38" y="14" width="38" height="36" class="svg-accent"/>
+              <text x="57" y="228" text-anchor="middle" class="svg-label-strong">CU</text>
+              <text x="57" y="242" text-anchor="middle" class="svg-label">클로즈업</text>
+            </g>
+            <g transform="translate(266 10)">
+              <rect x="0" y="0" width="115" height="200" class="svg-frame"/>
+              <use href="#fig" x="27" y="10" width="60" height="180"/>
+              <rect x="30" y="12" width="54" height="56" class="svg-accent"/>
+              <text x="57" y="228" text-anchor="middle" class="svg-label-strong">MCU</text>
+              <text x="57" y="242" text-anchor="middle" class="svg-label">바스트샷</text>
+            </g>
+            <g transform="translate(394 10)">
+              <rect x="0" y="0" width="115" height="200" class="svg-frame"/>
+              <use href="#fig" x="27" y="10" width="60" height="180"/>
+              <rect x="22" y="10" width="70" height="100" class="svg-accent"/>
+              <text x="57" y="228" text-anchor="middle" class="svg-label-strong">MS</text>
+              <text x="57" y="242" text-anchor="middle" class="svg-label">미디엄샷(허리)</text>
+            </g>
+            <g transform="translate(522 10)">
+              <rect x="0" y="0" width="115" height="200" class="svg-frame"/>
+              <use href="#fig" x="27" y="10" width="60" height="180"/>
+              <rect x="14" y="4" width="86" height="190" class="svg-accent"/>
+              <text x="57" y="228" text-anchor="middle" class="svg-label-strong">FS</text>
+              <text x="57" y="242" text-anchor="middle" class="svg-label">풀샷</text>
+            </g>
+            <g transform="translate(650 10)">
+              <rect x="0" y="0" width="115" height="200" class="svg-frame"/>
+              <path d="M0 150 L115 150 M6 150 L30 110 L52 150 M60 150 L84 96 L112 150" class="svg-muted"/>
+              <use href="#fig" x="44" y="100" width="24" height="60"/>
+              <rect x="2" y="2" width="111" height="196" class="svg-accent"/>
+              <text x="57" y="228" text-anchor="middle" class="svg-label-strong">LS / ELS</text>
+              <text x="57" y="242" text-anchor="middle" class="svg-label">롱샷 · 원경</text>
+            </g>
+          </svg>
+          <figcaption>붉은 테두리가 프레임이다. 프레임이 좁아질수록 감정이, 넓어질수록 상황이 보인다.</figcaption>
+        </figure>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>샷</th><th>프레임 범위</th><th>프롬프트 키워드</th><th>만화 컷에서의 쓰임</th></tr></thead>
+            <tbody>
+              <tr><td>익스트림 클로즈업 (ECU)</td><td>눈, 입, 손처럼 신체 일부나 작은 사물</td><td><span class="kw">extreme close-up, ECU, detail shot</span></td><td>결정적 순간, 미세한 감정 변화, 단서</td></tr>
+              <tr><td>클로즈업 (CU)</td><td>얼굴 전체, 배경 거의 없음</td><td><span class="kw">close-up, face filling the frame</span></td><td>감정 전달, 대사 강조</td></tr>
+              <tr><td>미디엄 클로즈업 (MCU, 바스트샷)</td><td>가슴 위</td><td><span class="kw">medium close-up, bust shot, chest-up</span></td><td>대화 컷의 기본값</td></tr>
+              <tr><td>미디엄샷 (MS, 웨이스트샷)</td><td>허리 위</td><td><span class="kw">medium shot, waist-up</span></td><td>대화와 손짓, 소품 다루기</td></tr>
+              <tr><td>카우보이샷 (니샷)</td><td>허벅지·무릎 위</td><td><span class="kw">cowboy shot, medium long shot, knee shot</span></td><td>자세, 허리춤의 소품, 대치</td></tr>
+              <tr><td>풀샷 (FS)</td><td>머리부터 발끝</td><td><span class="kw">full shot, full body</span></td><td>동작, 의상, 포즈</td></tr>
+              <tr><td>롱샷 (LS, 와이드샷)</td><td>인물과 주변 공간</td><td><span class="kw">long shot, wide shot</span></td><td>공간 안의 인물, 인물 간 거리</td></tr>
+              <tr><td>익스트림 롱샷 (ELS)</td><td>인물이 점처럼 작음</td><td><span class="kw">extreme long shot, extreme wide shot, tiny figure</span></td><td>고립, 규모, 장면 도입</td></tr>
+              <tr><td>설정샷</td><td>장소 전체</td><td><span class="kw">establishing shot</span></td><td>첫 컷, 장면 전환</td></tr>
+              <tr><td>투샷 · 스리샷</td><td>2~3인</td><td><span class="kw">two-shot, three-shot</span></td><td>관계, 대화의 거리</td></tr>
+              <tr><td>어깨너머샷 (OTS)</td><td>한 인물의 어깨 너머로 상대</td><td><span class="kw">over-the-shoulder shot</span></td><td>대화, 시선의 대상 공유</td></tr>
+              <tr><td>시점샷 (POV)</td><td>인물의 눈이 보는 것</td><td><span class="kw">POV shot, first-person view</span></td><td>몰입, 발견의 순간</td></tr>
+              <tr><td>인서트</td><td>사물 디테일</td><td><span class="kw">insert shot, detail insert</span></td><td>단서, 소품, 시간 경과</td></tr>
+              <tr><td>리액션샷</td><td>사건에 대한 인물 반응</td><td><span class="kw">reaction shot</span></td><td>대사 다음 컷</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
-        <section id="prompt-structure">
-            <h2>프롬프트 구조</h2>
-            <p>효과적인 미드저니 사진 프롬프트는 다음 요소들을 포함할 수 있습니다:</p>
-            <ol>
-                <li>주제 (Subject)</li>
-                <li>사진 유형, 장면, 또는 환경</li>
-                <li>상세 묘사 또는 고유한 특징</li>
-                <li>카메라 모델</li>
-                <li>렌즈 종류 및 사양</li>
-                <li>카메라 각도 또는 구도</li>
-                <li>조명 상태</li>
-            </ol>
-            <div class="example-box">
-                <p><strong>예시:</strong> "photostudio에서 과장된 움직임을 취하는 여성의 초상화, Canon EOS R5, 매크로 렌즈, 클로즈업 촬영, 차가운 조명 --ar 16:9"</p>
-            </div>
-        </section>
+      <section class="card" id="angles">
+        <h2><span class="num">04</span>앵글과 높이</h2>
+        <p>카메라가 인물보다 높은가, 낮은가, 기울었는가. 높이는 권력 관계를, 기울기는 심리 상태를 말한다.</p>
+        <figure class="diagram" aria-label="카메라 앵글 배치도">
+          <svg viewBox="0 0 780 260" xmlns="http://www.w3.org/2000/svg" role="img">
+            <title>인물을 둘러싼 카메라 위치: 버드아이, 하이앵글, 아이레벨, 로우앵글, 웜아이, 더치앵글</title>
+            <symbol id="cam" viewBox="0 0 40 26">
+              <rect x="2" y="6" width="26" height="16" rx="3" class="svg-ink"/>
+              <circle cx="15" cy="14" r="5" class="svg-ink"/>
+              <path d="M28 10 L38 6 L38 22 L28 18 Z" class="svg-ink"/>
+            </symbol>
+            <!-- subject -->
+            <use href="#fig" x="360" y="40" width="60" height="180"/>
+            <path d="M300 220 L480 220" class="svg-muted"/>
+            <!-- camera positions -->
+            <use href="#cam" x="370" y="2" width="40" height="26"/>
+            <text x="390" y="40" text-anchor="middle" class="svg-label">버드아이 (bird's-eye)</text>
+            <path d="M390 28 L390 38" class="svg-muted"/>
+            <use href="#cam" x="200" y="40" width="40" height="26"/>
+            <text x="220" y="80" text-anchor="middle" class="svg-label">하이앵글 (high angle)</text>
+            <path d="M240 60 L360 95" class="svg-muted"/>
+            <use href="#cam" x="170" y="118" width="40" height="26"/>
+            <text x="190" y="158" text-anchor="middle" class="svg-label">아이레벨 (eye-level)</text>
+            <path d="M210 131 L360 88" class="svg-muted"/>
+            <use href="#cam" x="200" y="196" width="40" height="26"/>
+            <text x="220" y="236" text-anchor="middle" class="svg-label">로우앵글 (low angle)</text>
+            <path d="M240 206 L360 120" class="svg-muted"/>
+            <use href="#cam" x="370" y="232" width="40" height="26"/>
+            <text x="470" y="252" text-anchor="start" class="svg-label">웜아이 (worm's-eye)</text>
+            <!-- dutch -->
+            <g transform="translate(560 100) rotate(-18)">
+              <rect x="0" y="0" width="120" height="80" class="svg-accent"/>
+              <use href="#fig" x="46" y="8" width="28" height="70"/>
+            </g>
+            <text x="620" y="215" text-anchor="middle" class="svg-label">더치앵글 (Dutch / canted)</text>
+            <text x="620" y="230" text-anchor="middle" class="svg-label">프레임 자체를 기울인다</text>
+          </svg>
+          <figcaption>높이는 위에서 보면 약해지고 아래에서 보면 강해진다. 더치앵글은 높이가 아니라 수평선을 건드린다.</figcaption>
+        </figure>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>앵글</th><th>카메라 위치</th><th>프롬프트 키워드</th><th>효과</th></tr></thead>
+            <tbody>
+              <tr><td>아이레벨</td><td>인물의 눈높이</td><td><span class="kw">eye-level shot</span></td><td>중립, 공감, 대화</td></tr>
+              <tr><td>하이앵글(부감)</td><td>위에서 내려다봄</td><td><span class="kw">high angle, looking down</span></td><td>약함, 무력감, 상황 조망</td></tr>
+              <tr><td>로우앵글(앙각)</td><td>아래에서 올려다봄</td><td><span class="kw">low angle, looking up</span></td><td>힘, 위압, 영웅적 등장</td></tr>
+              <tr><td>버드아이(직부감)</td><td>수직으로 내려다봄</td><td><span class="kw">bird's-eye view, top-down, overhead</span></td><td>패턴, 신의 시점, 고립</td></tr>
+              <tr><td>웜아이</td><td>바닥에서 수직으로 올려다봄</td><td><span class="kw">worm's-eye view</span></td><td>거대함, 압도</td></tr>
+              <tr><td>더치앵글</td><td>프레임을 기울임</td><td><span class="kw">Dutch angle, canted angle, tilted frame</span></td><td>불안, 광기, 역동</td></tr>
+              <tr><td>어깨·엉덩이 높이</td><td>어깨, 허리, 무릎, 바닥</td><td><span class="kw">shoulder-level, hip-level, knee-level, ground-level shot</span></td><td>높이에 따라 시선의 주체가 바뀐다</td></tr>
+              <tr><td>측면(프로필)</td><td>옆에서</td><td><span class="kw">profile view, side view</span></td><td>객관, 대립, 방향</td></tr>
+              <tr><td>뒷모습</td><td>뒤에서</td><td><span class="kw">seen from behind, back view</span></td><td>동행, 여운, 인물이 보는 것 공유</td></tr>
+              <tr><td>항공</td><td>드론·크레인 높이</td><td><span class="kw">aerial shot, drone view</span></td><td>규모, 지형</td></tr>
+              <tr><td>반영샷</td><td>거울, 물, 유리에 비친 상</td><td><span class="kw">reflection shot, seen in a mirror</span></td><td>이중성, 자기 인식</td></tr>
+              <tr><td>가려진 시점</td><td>전경 사물 사이로</td><td><span class="kw">obstructed view, peeking through foreground</span></td><td>엿보기, 서스펜스</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
-        <section id="interactive-examples">
-            <h2>대화형 프롬프트 생성기</h2>
-            <div class="example-container">
-                <div class="input-group">
-                    <label for="subject">주제:</label>
-                    <input type="text" id="subject" value="고양이">
-                </div>
+      <section class="card" id="lenses">
+        <h2><span class="num">05</span>렌즈와 초점거리</h2>
+        <p>초점거리는 화각과 원근을 함께 바꾼다. 짧을수록 넓게 담고 가까운 것을 과장하며, 길수록 좁게 담고 앞뒤 거리를 압축한다. 같은 인물 크기로 찍어도 배경의 크기가 달라진다.</p>
+        <figure class="diagram" aria-label="초점거리에 따른 원근 압축">
+          <svg viewBox="0 0 780 230" xmlns="http://www.w3.org/2000/svg" role="img">
+            <title>24mm, 50mm, 135mm로 같은 인물을 같은 크기로 찍었을 때 배경이 달라지는 모습</title>
+            <!-- 24mm -->
+            <g transform="translate(10 10)">
+              <rect x="0" y="0" width="240" height="170" class="svg-frame"/>
+              <path d="M0 120 L240 120 M40 120 L70 96 L100 120 M150 120 L185 88 L220 120" class="svg-muted"/>
+              <use href="#fig" x="95" y="30" width="50" height="150"/>
+              <text x="120" y="196" text-anchor="middle" class="svg-label-strong">24mm 광각</text>
+              <text x="120" y="212" text-anchor="middle" class="svg-label">배경이 멀고 작다 · 공간감 · 가까운 것 과장</text>
+            </g>
+            <!-- 50mm -->
+            <g transform="translate(270 10)">
+              <rect x="0" y="0" width="240" height="170" class="svg-frame"/>
+              <path d="M0 120 L240 120 M20 120 L70 72 L120 120 M130 120 L190 60 L240 120" class="svg-muted"/>
+              <use href="#fig" x="95" y="30" width="50" height="150"/>
+              <text x="120" y="196" text-anchor="middle" class="svg-label-strong">50mm 표준</text>
+              <text x="120" y="212" text-anchor="middle" class="svg-label">사람 눈과 비슷한 원근 · 왜곡 적음</text>
+            </g>
+            <!-- 135mm -->
+            <g transform="translate(530 10)">
+              <rect x="0" y="0" width="240" height="170" class="svg-frame"/>
+              <path d="M0 120 L240 120 M-10 120 L80 30 L170 120 M120 120 L220 18 L250 48" class="svg-muted"/>
+              <use href="#fig" x="95" y="30" width="50" height="150"/>
+              <text x="120" y="196" text-anchor="middle" class="svg-label-strong">135mm 망원</text>
+              <text x="120" y="212" text-anchor="middle" class="svg-label">배경이 바짝 다가온다 · 압축 · 배경 분리</text>
+            </g>
+          </svg>
+          <figcaption>인물 크기를 맞추면 초점거리가 길수록 배경이 커지고 가까워 보인다. 압축은 긴 렌즈로 만든다.</figcaption>
+        </figure>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>렌즈</th><th>화각·성격</th><th>프롬프트 키워드</th><th>쓰는 장면</th></tr></thead>
+            <tbody>
+              <tr><td>8–12mm 어안</td><td>180°에 가까운 원형 왜곡</td><td><span class="kw">fisheye lens</span></td><td>환각, 유머, 극단적 공간감</td></tr>
+              <tr><td>14–16mm 초광각</td><td>가장자리가 늘어지고 원근이 과장됨</td><td><span class="kw">14mm ultra-wide lens</span></td><td>건축, 좁은 실내, 압도적 공간</td></tr>
+              <tr><td>24mm 광각</td><td>공간감, 가까운 피사체 왜곡, 풍경과 군상</td><td><span class="kw">24mm wide-angle lens</span></td><td>환경 속 인물, 역동적 로우앵글</td></tr>
+              <tr><td>35mm 준광각</td><td>몰입감, 약간의 원근, 환경 인물에 적합</td><td><span class="kw">35mm lens</span></td><td>스트리트, 다큐, 대화 장면의 전신</td></tr>
+              <tr><td>50mm 표준</td><td>사람 눈과 비슷, 왜곡 적음</td><td><span class="kw">50mm lens</span></td><td>일상, 전신 인물, 중립적 관찰</td></tr>
+              <tr><td>85mm 인물</td><td>얼굴 비례가 안정되고 배경이 분리됨</td><td><span class="kw">85mm portrait lens, f/1.4</span></td><td>클로즈업 인물, 감정</td></tr>
+              <tr><td>135mm 망원</td><td>강한 압축, 큰 보케, 거리 필요</td><td><span class="kw">135mm telephoto lens</span></td><td>헤드샷, 디테일, 먼 관찰</td></tr>
+              <tr><td>200mm 이상 초망원</td><td>평면화, 원거리 관찰, 군중 속 고립</td><td><span class="kw">200mm telephoto, compressed perspective</span></td><td>엿보기, 스포츠, 인파 속 인물</td></tr>
+              <tr><td>100mm 매크로</td><td>1:1 접사, 질감</td><td><span class="kw">100mm macro lens</span></td><td>눈, 손, 사물 인서트</td></tr>
+              <tr><td>틸트시프트</td><td>초점면을 기울여 미니어처 효과</td><td><span class="kw">tilt-shift lens, miniature effect</span></td><td>도시 조감, 장난감 같은 세계</td></tr>
+              <tr><td>아나모픽</td><td>2x 스퀴즈, 타원 보케, 수평 플레어, 2.39:1</td><td><span class="kw">anamorphic lens, oval bokeh, horizontal lens flare</span></td><td>영화적 와이드 장면</td></tr>
+              <tr><td>핀홀</td><td>무한 심도, 부드러움, 비네팅</td><td><span class="kw">pinhole camera</span></td><td>꿈, 기억, 시간의 흐름</td></tr>
+              <tr><td>페츠발·소프트</td><td>소용돌이 보케, 19세기 인물 사진 느낌</td><td><span class="kw">Petzval lens, swirly bokeh</span></td><td>몽환, 빈티지 인물</td></tr>
+              <tr><td>스플릿 디옵터</td><td>전경과 후경이 동시에 선명, 경계가 흐림</td><td><span class="kw">split diopter shot</span></td><td>두 인물의 동시 반응, 서스펜스</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
-                <div class="input-group">
-                    <label for="scene">장면:</label>
-                    <input type="text" id="scene" value="창턱에 앉아있는">
-                </div>
+      <section class="card" id="exposure">
+        <h2><span class="num">06</span>조리개 · 셔터 · 카메라 움직임</h2>
+        <h3>조리개와 심도</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>조리개</th><th>심도</th><th>프롬프트 키워드</th><th>효과</th></tr></thead>
+            <tbody>
+              <tr><td>f/1.2–f/1.8</td><td>극도로 얕음</td><td><span class="kw">shallow depth of field, creamy bokeh, f/1.4</span></td><td>인물만 남기고 세상을 지운다. 집중과 친밀</td></tr>
+              <tr><td>f/2.8–f/4</td><td>중간</td><td><span class="kw">f/2.8, soft background</span></td><td>대화, 소품과 인물을 함께</td></tr>
+              <tr><td>f/8–f/16</td><td>깊음</td><td><span class="kw">deep focus, everything in sharp focus, f/11</span></td><td>군상, 건축, 미장센 전체를 읽게 한다</td></tr>
+              <tr><td>선택 초점</td><td>특정 요소만</td><td><span class="kw">focus on the hands, background out of focus</span></td><td>정지 이미지에서의 랙포커스 대용</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>셔터와 시간</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>기법</th><th>프롬프트 키워드</th><th>효과</th><th>만화의 등가물</th></tr></thead>
+            <tbody>
+              <tr><td>순간 정지</td><td><span class="kw">frozen motion, 1/4000s shutter, water droplets suspended</span></td><td>시간이 멈춘 한 점</td><td>흰 배경 + 인물만, 효과선 없음</td></tr>
+              <tr><td>모션 블러</td><td><span class="kw">motion blur, 1/15s</span></td><td>움직임의 흔적</td><td>속도선, 잔상</td></tr>
+              <tr><td>패닝</td><td><span class="kw">panning shot, streaked background, subject sharp</span></td><td>속도와 방향</td><td>배경 속도선 + 인물 선명</td></tr>
+              <tr><td>장노출</td><td><span class="kw">long exposure, light trails, silky water</span></td><td>시간의 축적</td><td>인물 없는 공간 컷, 시간 경과</td></tr>
+              <tr><td>ICM</td><td><span class="kw">intentional camera movement, abstract blur</span></td><td>추상, 기억</td><td>흐트러진 선의 컷</td></tr>
+              <tr><td>이중 노출</td><td><span class="kw">double exposure</span></td><td>두 이미지의 겹침</td><td>회상 오버랩 컷</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>카메라 움직임 어휘 (영상 모델·만화 연출)</h3>
+        <p>정지 이미지에는 직접 쓰이지 않지만, 미드저니 비디오·Veo·Kling 같은 영상 모델의 프롬프트와 만화의 컷 연속 설계에 쓰인다.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>움직임</th><th>키워드</th><th>뜻</th><th>만화의 등가물</th></tr></thead>
+            <tbody>
+              <tr><td>푸시인 · 풀백</td><td><span class="kw">dolly in / push-in, pull back</span></td><td>카메라가 다가가거나 물러남</td><td>같은 구도를 점점 크게 자르는 연속 컷, 집중선</td></tr>
+              <tr><td>트래킹 · 팔로우</td><td><span class="kw">tracking shot, following shot</span></td><td>움직이는 인물과 나란히 이동</td><td>속도선, 배경 흐름</td></tr>
+              <tr><td>팬 · 틸트</td><td><span class="kw">pan left, tilt up</span></td><td>제자리에서 좌우·상하 회전</td><td>가로로 긴 컷, 세로로 긴 컷</td></tr>
+              <tr><td>휩팬</td><td><span class="kw">whip pan</span></td><td>빠른 회전으로 장면 전환</td><td>컷 사이 모션 블러 전환</td></tr>
+              <tr><td>크레인 · 지브</td><td><span class="kw">crane shot, rising above the scene</span></td><td>위로 올라가며 빠짐</td><td>마지막 컷의 부감 롱샷</td></tr>
+              <tr><td>오비탈 · 아크</td><td><span class="kw">orbit shot, arc shot</span></td><td>인물 주위를 돈다</td><td>같은 순간을 다른 각도로 연속 배치</td></tr>
+              <tr><td>달리 줌</td><td><span class="kw">dolly zoom, vertigo effect</span></td><td>인물은 그대로, 배경만 왜곡</td><td>배경 원근이 뒤틀린 충격 컷</td></tr>
+              <tr><td>핸드헬드 · 스테디캠</td><td><span class="kw">handheld, shaky; steadicam, smooth glide</span></td><td>흔들림의 유무</td><td>거친 선 vs 정돈된 선</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
-                <div class="input-group">
-                    <label for="camera">카메라:</label>
-                    <select id="camera">
-                        <option value="Canon EOS R5">Canon EOS R5</option>
-                        <option value="Canon 5D Mark IV">Canon 5D Mark IV</option>
-                        <option value="Nikon D850">Nikon D850</option>
-                        <option value="Sony A7 III">Sony A7 III</option>
-                        <option value="Fujifilm X-T4">Fujifilm X-T4</option>
-                        <option value="Leica M10">Leica M10</option>
-                    </select>
-                </div>
+      <section class="card" id="lighting">
+        <h2><span class="num">07</span>조명</h2>
+        <p>빛의 방향이 얼굴의 입체를, 빛의 질이 분위기를 만든다. 이름이 있는 조명은 이름으로 부르는 편이 모델에 잘 전달된다.</p>
+        <h3>자연광과 시간</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>이름</th><th>프롬프트 키워드</th><th>특징</th></tr></thead>
+            <tbody>
+              <tr><td>골든아워</td><td><span class="kw">golden hour light</span></td><td>낮은 해, 따뜻한 색, 긴 그림자</td></tr>
+              <tr><td>블루아워</td><td><span class="kw">blue hour</span></td><td>해 진 직후의 푸른 빛, 인공 조명과 섞임</td></tr>
+              <tr><td>흐린 날</td><td><span class="kw">overcast soft light</span></td><td>그림자 없는 부드러운 빛, 피부에 유리</td></tr>
+              <tr><td>한낮</td><td><span class="kw">harsh midday sun, hard shadows</span></td><td>강한 대비, 눈 아래 그림자</td></tr>
+              <tr><td>창가</td><td><span class="kw">window light, side-lit</span></td><td>한쪽에서 들어오는 큰 광원</td></tr>
+              <tr><td>얼룩빛</td><td><span class="kw">dappled light through leaves</span></td><td>나뭇잎 사이로 떨어지는 빛 조각</td></tr>
+              <tr><td>달빛 · 촛불</td><td><span class="kw">moonlight; candlelight</span></td><td>약한 광원, 깊은 그림자, 가까운 얼굴만 밝음</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>인물 조명 패턴</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>패턴</th><th>광원 위치</th><th>그림자</th><th>인상</th></tr></thead>
+            <tbody>
+              <tr><td>렘브란트 <span class="kw">Rembrandt lighting</span></td><td>45° 위·옆</td><td>반대쪽 뺨에 빛의 삼각형</td><td>회화적, 깊이</td></tr>
+              <tr><td>스플릿 <span class="kw">split lighting</span></td><td>정측면</td><td>얼굴 절반이 어둠</td><td>대립, 이중성</td></tr>
+              <tr><td>버터플라이 <span class="kw">butterfly lighting</span></td><td>정면 위</td><td>코 아래 나비 모양</td><td>화보, 글래머</td></tr>
+              <tr><td>루프 <span class="kw">loop lighting</span></td><td>약간 옆·위</td><td>코 옆에 작은 고리</td><td>무난하고 자연스러움</td></tr>
+              <tr><td>클램셸 <span class="kw">clamshell lighting</span></td><td>버터플라이 + 아래 반사</td><td>거의 없음</td><td>부드러운 뷰티</td></tr>
+              <tr><td>림라이트 <span class="kw">rim light, backlit</span></td><td>뒤</td><td>윤곽에 빛의 테두리</td><td>분리, 신비</td></tr>
+              <tr><td>실루엣 <span class="kw">silhouette</span></td><td>뒤, 강한 광원</td><td>인물 전체가 검음</td><td>익명성, 상징</td></tr>
+              <tr><td>쇼트 · 브로드 <span class="kw">short lighting / broad lighting</span></td><td>얼굴 돌린 방향에 따라</td><td>어두운 쪽이 넓음 / 밝은 쪽이 넓음</td><td>갸름함 / 풍성함</td></tr>
+              <tr><td>크로스 <span class="kw">cross lighting</span></td><td>앞·뒤 두 광원</td><td>입체적 윤곽</td><td>드라마, 액션</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>분위기 조명</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>이름</th><th>프롬프트 키워드</th><th>효과</th></tr></thead>
+            <tbody>
+              <tr><td>키아로스쿠로 · 로우키</td><td><span class="kw">chiaroscuro, low-key lighting</span></td><td>어둠 속 한 줄기 빛, 긴장과 비밀</td></tr>
+              <tr><td>하이키</td><td><span class="kw">high-key, bright and airy</span></td><td>그림자 없는 밝음, 가벼움</td></tr>
+              <tr><td>볼류메트릭</td><td><span class="kw">volumetric light, god rays, light shafts</span></td><td>먼지·안개 속 빛줄기</td></tr>
+              <tr><td>네온 · 프랙티컬</td><td><span class="kw">neon practical lights, mixed color temperature</span></td><td>장면 안의 광원, 색 대비</td></tr>
+              <tr><td>단일 광원</td><td><span class="kw">single bare bulb overhead, flashlight from below</span></td><td>심문, 공포(아래에서 비추면)</td></tr>
+              <tr><td>직광 플래시</td><td><span class="kw">on-camera flash, snapshot aesthetic</span></td><td>파티 스냅, 90년대 느낌</td></tr>
+              <tr><td>스튜디오</td><td><span class="kw">studio softbox lighting, seamless backdrop</span></td><td>통제된 상업 사진</td></tr>
+              <tr><td>색온도</td><td><span class="kw">tungsten warm, daylight cool, mixed lighting</span></td><td>따뜻함과 차가움의 대비</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
-                <div class="input-group">
-                    <label for="lens">렌즈:</label>
-                    <select id="lens">
-                        <option value="50mm f/1.8">50mm f/1.8</option>
-                        <option value="85mm f/1.4">85mm f/1.4</option>
-                        <option value="24-70mm f/2.8">24-70mm f/2.8</option>
-                        <option value="100mm f/2.8 Macro">100mm f/2.8 Macro</option>
-                        <option value="70-200mm f/2.8">70-200mm f/2.8</option>
-                        <option value="16-35mm f/2.8">16-35mm f/2.8</option>
-                    </select>
-                </div>
+      <section class="card" id="gear">
+        <h2><span class="num">08</span>카메라 · 필름 · 프로세스</h2>
+        <p>기종과 필름 이름은 색, 입자, 포맷을 한꺼번에 불러오는 압축 어휘다. 2025년판의 7종을 포맷별로 넓혔다.</p>
+        <h3>카메라 바디와 포맷</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>기종</th><th>포맷</th><th>프롬프트 키워드</th><th>불러오는 느낌</th></tr></thead>
+            <tbody>
+              <tr><td>핫셀블라드 500C/M</td><td>6×6 중형 필름</td><td><span class="kw">shot on Hasselblad 500C/M, medium format</span></td><td>정사각, 고운 계조, 격조</td></tr>
+              <tr><td>마미야 RZ67 · 펜탁스 67</td><td>6×7 중형</td><td><span class="kw">shot on Mamiya RZ67</span></td><td>얕은 심도의 중형 인물</td></tr>
+              <tr><td>라이카 M6</td><td>35mm 레인지파인더</td><td><span class="kw">shot on Leica M6, 35mm film</span></td><td>스트리트, 결정적 순간</td></tr>
+              <tr><td>콘탁스 T2</td><td>컴팩트 필름</td><td><span class="kw">shot on Contax T2 with flash</span></td><td>스냅, 90년대 패션</td></tr>
+              <tr><td>캐논 EOS R5 · 소니 A7R V · 니콘 Z8</td><td>현대 풀프레임 디지털</td><td><span class="kw">shot on Sony A7R V</span></td><td>선명, 깨끗, 상업</td></tr>
+              <tr><td>후지 X100VI</td><td>APS-C, 필름 시뮬레이션</td><td><span class="kw">shot on Fujifilm X100VI, film simulation</span></td><td>필름 색의 디지털</td></tr>
+              <tr><td>ARRI 알렉사 35 · RED</td><td>시네마 카메라</td><td><span class="kw">ARRI Alexa 35 cinema camera; RED cinema camera</span></td><td>영화 스틸, 넓은 계조</td></tr>
+              <tr><td>볼렉스 16mm · 슈퍼8</td><td>소형 영화 필름</td><td><span class="kw">Bolex 16mm film; Super 8 film</span></td><td>거친 입자, 홈무비</td></tr>
+              <tr><td>VHS 캠코더</td><td>아날로그 비디오</td><td><span class="kw">1990s VHS camcorder footage</span></td><td>주사선, 번짐, 기억</td></tr>
+              <tr><td>일회용 카메라</td><td>플라스틱 렌즈</td><td><span class="kw">disposable camera with flash</span></td><td>비네팅, 과노출 플래시</td></tr>
+              <tr><td>4×5 대형</td><td>대형 시트 필름</td><td><span class="kw">4x5 large format view camera</span></td><td>극도의 디테일, 정적</td></tr>
+              <tr><td>폴라로이드 SX-70</td><td>인스턴트</td><td><span class="kw">Polaroid SX-70 instant photo</span></td><td>흰 테두리, 바랜 색</td></tr>
+              <tr><td>스마트폰</td><td>소형 센서</td><td><span class="kw">smartphone photo, computational HDR</span></td><td>일상, 깊은 심도</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>필름 스톡</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>필름</th><th>ISO</th><th>성격</th><th>프롬프트 키워드</th></tr></thead>
+            <tbody>
+              <tr><td>코닥 포트라 400</td><td>400 컬러</td><td>절제된 색, 부드러운 대비, 자연스러운 피부톤. 과노출에 관대</td><td><span class="kw">Kodak Portra 400</span></td></tr>
+              <tr><td>코닥 포트라 160</td><td>160 컬러</td><td>가장 고운 입자, 정돈된 색. 밝은 인물 사진</td><td><span class="kw">Kodak Portra 160</span></td></tr>
+              <tr><td>코닥 골드 200</td><td>200 컬러</td><td>따뜻하고 향수 어린 색, 중간 입자</td><td><span class="kw">Kodak Gold 200</span></td></tr>
+              <tr><td>코닥 엑타 100</td><td>100 컬러</td><td>높은 채도, 고운 입자. 풍경</td><td><span class="kw">Kodak Ektar 100</span></td></tr>
+              <tr><td>시네스틸 800T</td><td>800 컬러(텅스텐)</td><td>푸른 밤, 붉은 할레이션, 뚜렷한 입자. 영화적 야경</td><td><span class="kw">CineStill 800T, halation</span></td></tr>
+              <tr><td>후지 벨비아 50</td><td>50 슬라이드</td><td>극채도, 풍경</td><td><span class="kw">Fujifilm Velvia 50</span></td></tr>
+              <tr><td>후지 Pro 400H</td><td>400 컬러(단종)</td><td>차가운 파스텔, 녹색이 도는 피부</td><td><span class="kw">Fujifilm Pro 400H</span></td></tr>
+              <tr><td>코닥 트라이X 400</td><td>400 흑백</td><td>굵은 입자, 강한 대비. 보도사진</td><td><span class="kw">Kodak Tri-X 400</span></td></tr>
+              <tr><td>일포드 HP5 플러스</td><td>400 흑백</td><td>관대한 노출, 중간 대비</td><td><span class="kw">Ilford HP5 Plus</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>프로세스와 역사적 기법</h3>
+        <ul>
+          <li><span class="kw">cross-processed film</span> — 슬라이드 필름을 네거티브 현상. 색이 틀어지고 대비가 강해진다.</li>
+          <li><span class="kw">bleach bypass</span> — 은을 남겨 채도를 낮추고 대비를 올린다. 전쟁 영화의 질감.</li>
+          <li><span class="kw">push-processed, expired film</span> — 입자가 굵어지고 색이 바랜다.</li>
+          <li><span class="kw">wet plate collodion, tintype, daguerreotype</span> — 19세기 기법. 얕은 심도, 유리판의 얼룩, 금속광.</li>
+          <li><span class="kw">cyanotype</span> — 청색 인화. 식물 표본, 설계도의 느낌.</li>
+          <li><span class="kw">contact sheet, film scan with border, sprocket holes</span> — 필름이라는 물성을 드러내는 프레임.</li>
+        </ul>
+      </section>
 
-                <div class="input-group">
-                    <label for="lighting">조명:</label>
-                    <select id="lighting">
-                        <option value="golden hour">골든 아워</option>
-                        <option value="blue hour">블루 아워</option>
-                        <option value="studio lighting">스튜디오 조명</option>
-                        <option value="natural light">자연광</option>
-                        <option value="backlit">역광</option>
-                    </select>
-                </div>
+      <section class="card" id="effects">
+        <h2><span class="num">09</span>광학 효과</h2>
+        <p>효과는 장식이 아니라 렌즈가 세상을 통과시키며 남긴 흔적이다. 한두 개만 고르고, 장면이 요구하지 않으면 비운다.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>효과</th><th>프롬프트 키워드</th><th>원인과 느낌</th></tr></thead>
+            <tbody>
+              <tr><td>렌즈 플레어</td><td><span class="kw">lens flare</span></td><td>강한 광원이 렌즈 안에서 반사. 역광의 감성</td></tr>
+              <tr><td>아나모픽 플레어</td><td><span class="kw">anamorphic horizontal flare, blue streak</span></td><td>수평으로 길게 뻗는 푸른 줄. SF·영화</td></tr>
+              <tr><td>색수차</td><td><span class="kw">chromatic aberration</span></td><td>윤곽의 색 번짐. 싸구려 렌즈, 글리치</td></tr>
+              <tr><td>비네팅</td><td><span class="kw">vignette</span></td><td>모서리가 어두워짐. 시선을 중앙으로</td></tr>
+              <tr><td>필름 그레인</td><td><span class="kw">film grain</span></td><td>입자. 디지털의 매끈함을 없앤다</td></tr>
+              <tr><td>할레이션</td><td><span class="kw">halation</span></td><td>밝은 광원 주위의 붉은 번짐. CineStill의 서명</td></tr>
+              <tr><td>블룸</td><td><span class="kw">bloom, glowing highlights</span></td><td>하이라이트가 퍼짐. 꿈, 부드러움</td></tr>
+              <tr><td>라이트 리크</td><td><span class="kw">light leaks</span></td><td>필름에 샌 빛. 주황·붉은 띠</td></tr>
+              <tr><td>배럴·핀쿠션 왜곡</td><td><span class="kw">barrel distortion</span></td><td>직선이 휨. 광각과 어안</td></tr>
+              <tr><td>선스타</td><td><span class="kw">sun starburst, f/16</span></td><td>조리개 날에 의한 별 모양 광원</td></tr>
+              <tr><td>프로미스트 확산</td><td><span class="kw">pro-mist diffusion filter</span></td><td>하이라이트가 안개처럼 퍼짐. 뮤직비디오</td></tr>
+              <tr><td>소용돌이·고양이눈 보케</td><td><span class="kw">swirly bokeh; cat-eye bokeh</span></td><td>구형 렌즈의 가장자리 보케</td></tr>
+              <tr><td>렌즈 위 빗방울 · 유리 너머</td><td><span class="kw">rain drops on the lens; shot through glass with reflections</span></td><td>관찰자와 대상 사이의 막</td></tr>
+              <tr><td>프리렌징</td><td><span class="kw">freelensing, lens whacking</span></td><td>렌즈를 떼고 찍은 빛샘과 틸트 효과</td></tr>
+              <tr><td>적외선</td><td><span class="kw">infrared photography, false color</span></td><td>잎이 희고 하늘이 검은 세계</td></tr>
+              <tr><td>흐린 전경</td><td><span class="kw">out-of-focus foreground</span></td><td>전경 가림으로 깊이와 엿보기</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
-                <button id="generate-button">프롬프트 생성</button>
+      <section class="card" id="composition">
+        <h2><span class="num">10</span>구도와 미장센</h2>
+        <p>「생성의 시선」은 여백을 비울지 채울지를 동양의 여백·여실의 미학과 서양의 채우는 미학 사이의 긴장에서 매번 결정하라고 한다. 아래 어휘는 그 결정을 프롬프트로 옮기는 말이다.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>구도</th><th>프롬프트 키워드</th><th>효과</th><th>여백 ↔ 채움</th></tr></thead>
+            <tbody>
+              <tr><td>삼분할</td><td><span class="kw">rule of thirds</span></td><td>안정된 배치</td><td>중간</td></tr>
+              <tr><td>황금나선</td><td><span class="kw">golden spiral composition</span></td><td>시선이 감겨 들어감</td><td>중간</td></tr>
+              <tr><td>중앙 대칭</td><td><span class="kw">centered symmetrical composition</span></td><td>정면성, 의식, 위압</td><td>채움</td></tr>
+              <tr><td>유도선</td><td><span class="kw">leading lines</span></td><td>시선을 끌고 간다</td><td>중간</td></tr>
+              <tr><td>프레임 속 프레임</td><td><span class="kw">frame within a frame</span></td><td>문, 창, 거울로 다시 가둠</td><td>채움</td></tr>
+              <tr><td>여백</td><td><span class="kw">lots of negative space, minimal</span></td><td>침묵, 고립, 호흡</td><td>여백</td></tr>
+              <tr><td>전경 가림</td><td><span class="kw">foreground occlusion</span></td><td>깊이와 엿보기</td><td>채움</td></tr>
+              <tr><td>겹층 깊이</td><td><span class="kw">layered depth, foreground midground background</span></td><td>공간의 두께</td><td>채움</td></tr>
+              <tr><td>낮은 · 높은 지평선</td><td><span class="kw">low horizon; high horizon</span></td><td>하늘이 주인 / 땅이 주인</td><td>여백 / 채움</td></tr>
+              <tr><td>대각선</td><td><span class="kw">diagonal composition</span></td><td>움직임, 불안정</td><td>중간</td></tr>
+              <tr><td>반복 패턴</td><td><span class="kw">repetition and pattern, then one break</span></td><td>리듬, 그리고 깨짐</td><td>채움</td></tr>
+              <tr><td>고립</td><td><span class="kw">isolated subject, lone figure</span></td><td>외로움, 집중</td><td>여백</td></tr>
+              <tr><td>실루엣 · 반영</td><td><span class="kw">silhouette; reflection in water</span></td><td>형태와 이중성</td><td>여백</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
-                <div id="prompt-output">
-                    생성된 프롬프트: <span id="prompt-text"></span>
-                </div>
-            </div>
-        </section>
+      <section class="card" id="structure">
+        <h2><span class="num">11</span>프롬프트 구조와 예시</h2>
+        <p>키워드를 쌓지 말고 촬영감독에게 브리핑하듯 쓴다. 순서가 중요하다. 피사체가 먼저, 파라미터가 마지막이다. 50~150 토큰이 적당하고, 길어질수록 항목끼리 상쇄된다.</p>
+        <ol>
+          <li><strong>스타일·매체</strong> — photograph / cinematic film still / manga page</li>
+          <li><strong>피사체와 행동</strong> — 누가, 무엇을</li>
+          <li><strong>장면·장소·시간</strong> — 어디서, 언제</li>
+          <li><strong>샷과 앵글</strong> — 얼마나 가까이, 어디서 보는가</li>
+          <li><strong>렌즈·조리개·셔터</strong> — 원근, 심도, 시간</li>
+          <li><strong>조명</strong></li>
+          <li><strong>카메라·필름</strong></li>
+          <li><strong>효과와 구도</strong> — 한두 개</li>
+          <li><strong>파라미터</strong> — <code>--ar</code> <code>--raw</code> <code>--s</code> …</li>
+        </ol>
+        <h3>예시 1 · 사진</h3>
+        <pre><code>photorealistic photograph, an old lighthouse keeper mending a net on a wet stone pier at dawn, medium shot, seen from behind, 24mm wide-angle lens, f/8 deep focus, overcast soft light, shot on Hasselblad 500C/M, Kodak Portra 400, film grain, lots of negative space --ar 4:5 --raw --s 50</code></pre>
+        <h3>예시 2 · 영화 스틸</h3>
+        <pre><code>cinematic film still, a woman in a red raincoat waiting under a neon sign in a narrow Seoul alley at night, long shot, obstructed view peeking through foreground objects, anamorphic lens, oval bokeh, f/1.8 shallow depth of field, neon practical lights, ARRI Alexa 35, CineStill 800T with halation, anamorphic horizontal flare, rain drops on the lens --ar 239:100 --raw --exp 10</code></pre>
+        <h3>예시 3 · 만화 컷 (Niji 7)</h3>
+        <pre><code>black and white manga panel, ink lines, screentone, a teenage girl's eyes reflecting a burning letter, extreme close-up, eye-level, 85mm portrait lens, f/1.8 shallow depth of field, candlelight, centered symmetrical composition --niji 7 --ar 3:4</code></pre>
+        <h3>예시 4 · 「생성의 시선」 원고 한 장 (GPT·Gemini 계열, 한국어)</h3>
+        <p>컷 플래너가 아래 형식으로 출력한다. 컷마다 카메라를 적고, 마지막에 출판 요건을 붙인다.</p>
+        <pre><code>[생성의 시선 · 출판 원고 컷 플랜]
+주제: 10년 만에 겨울 기차역에서 재회한 두 사람
+형식: 흑백 인쇄 원고 / 작화: 일본 만화 / 읽기 순서: 왼쪽에서 오른쪽, 위에서 아래(한국식)
+컷 수: 6 (B4 원고 규격, 세로 약 2:3)
 
-        <section id="tips">
-            <h2>효과적인 프롬프트를 위한 팁</h2>
-            <ul>
-                <li>원하는 효과를 구체적으로 명시하세요.</li>
-                <li>카메라와 렌즈 정보를 조합하여 더욱 정밀한 결과를 얻으세요.</li>
-                <li>추가적인 제어를 위해 카메라 설정을 포함하세요.</li>
-                <li>의도하지 않은 효과를 방지하기 위해 부정형 프롬프트를 활용하세요.</li>
-                <li>원하는 미적 감각을 달성하기 위해 다양한 조합을 실험해 보세요.</li>
-            </ul>
-        </section>
+컷 1 (설정샷): 익스트림 롱샷, 하이앵글(부감), 24mm 광각, 흐린 날 부드러운 빛. 대사: 없음. 효과음: 쏴아아.
+컷 2 (대화): 미디엄 클로즈업(바스트샷), 아이레벨, 85mm 인물, 창가 빛. 대사: "……오랜만이야". 효과음: 없음.
+…
+규칙: (출판 요건 — 펜 마감, 말풍선·효과음 포함, 인물 일관성, 읽기 순서, 밑선 없음, 워터마크 없음)</code></pre>
+      </section>
+
+      <section class="card" id="params">
+        <h2><span class="num">12</span>미드저니 파라미터 (V8.2 · 2026-10 기준)</h2>
+        <p>2026년 10월 기준 기본 모델은 V8.2(2026-07-24~)다. V8.2는 Edit Model을 도입해 Omni Reference·Character Reference·Retexture를 대체했다. V7 전용·레거시 파라미터는 표 아래에 분리했다.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>파라미터</th><th>값</th><th>뜻</th><th>카메라 작업에서의 쓰임</th></tr></thead>
+            <tbody>
+              <tr><td><code>--ar</code></td><td>정수 비율, 기본 1:1, 최대 14:1 (HD는 4:1)</td><td>가로세로 비율</td><td>2.39:1 아나모픽은 <code>--ar 239:100</code>, 원고 비율은 <code>2:3</code></td></tr>
+              <tr><td><code>--raw</code></td><td>—</td><td>미드저니 기본 미화를 줄이고 프롬프트에 충실</td><td>카메라 스펙을 그대로 반영시키고 싶을 때 거의 항상 켠다 (옛 표기 <code>--style raw</code>)</td></tr>
+              <tr><td><code>--s</code> / <code>--stylize</code></td><td>0–1000, 기본 100</td><td>미드저니 미학의 강도</td><td>사진·원고는 0–100, 화보는 200 이상</td></tr>
+              <tr><td><code>--c</code> / <code>--chaos</code></td><td>0–100, 기본 0</td><td>4장 사이의 다양성</td><td>구도 탐색 단계에서 20–40</td></tr>
+              <tr><td><code>--w</code> / <code>--weird</code></td><td>0–3000, 기본 0</td><td>기묘함</td><td>실험 컷</td></tr>
+              <tr><td><code>--exp</code></td><td>0–100, 기본 0</td><td>디테일과 톤맵 가미</td><td>10–25 권장, 넘기면 과장</td></tr>
+              <tr><td><code>--hd</code> / <code>--sd</code></td><td>2048px / 1024px</td><td>해상도 (V8.1+)</td><td>HD는 GPU 1.3분, 인쇄용 원고에 사용</td></tr>
+              <tr><td><code>--sref</code> <code>--sw</code> <code>--sv</code></td><td>URL 또는 코드 / 0–1000(기본 100) / 버전</td><td>스타일 참조, 가중치, 참조 버전</td><td>작화 톤 고정. V8 기준 <code>--sv 7</code>, <code>--sref random</code>은 드래프트에서 스타일 탐색</td></tr>
+              <tr><td><code>--p</code> / <code>--profile</code></td><td>프로필 ID</td><td>개인화 · 무드보드</td><td>자기 취향의 색·구도를 반영</td></tr>
+              <tr><td><code>--seed</code></td><td>0–4294967295</td><td>재현</td><td>같은 구도의 변주 비교 (V8에서 재현성이 높아짐)</td></tr>
+              <tr><td><code>--no</code></td><td>단어 목록</td><td>제외</td><td><code>--no text, watermark</code> 등</td></tr>
+              <tr><td><code>--tile</code></td><td>—</td><td>이어지는 패턴</td><td>Edit Model과 비호환</td></tr>
+              <tr><td><code>--draft</code></td><td>—</td><td>24장 × 512px 초안, GPU 0.4분 (웹 전용)</td><td>앵글 탐색은 드래프트로, 결정 후 정식 생성</td></tr>
+              <tr><td><code>--edit</code></td><td>참조 이미지 최대 4장</td><td>Edit Model: 글로 지시해 편집하거나 참조로 새 이미지 생성</td><td>V8.2 신설. 인물 일관성(옛 <code>--cref</code>)과 <code>--oref</code>의 자리를 대신함</td></tr>
+              <tr><td><code>--niji 7</code></td><td>—</td><td>애니·일러스트 모델 (2026-01-09 출시)</td><td>만화 컷, 웹툰 스타일</td></tr>
+              <tr><td><code>--video</code> <code>--motion</code> <code>--bs</code> <code>--loop</code> <code>--end</code></td><td>low/high, 기본 4 등</td><td>영상 워크플로</td><td>카메라 움직임 어휘와 함께 사용</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note"><strong>V7 전용 · 레거시.</strong> <code>--q 1/2/4</code>(V6·V7, V8.1·8.2 미지원), <code>--oref</code>/<code>--ow</code>(V7 전용, V8에서 Edit Model로 대체), <code>--cref</code>/<code>--cw</code>(V6·Niji 6), <code>--turbo</code>(V6·V7), <code>--style raw</code>(옛 표기). 버전별 지원 여부는 자주 바뀌므로 공식 문서를 확인하라.</div>
+      </section>
+
+      <section class="card" id="generator">
+        <h2><span class="num">13</span>프롬프트 생성기 v2 · 컷 플래너</h2>
+        <p>왼쪽 탭은 사진·단일 컷용 영어 프롬프트를 만든다. 오른쪽 탭은 「생성의 시선」 형식의 컷 플랜(한국어)과 컷별 Niji 7 프롬프트를 만든다. 입력값은 이 브라우저에만 저장된다.</p>
+        <div class="gen-tabs" role="tablist">
+          <button class="gen-tab" role="tab" data-tab="photo" aria-selected="true">사진 · 단일 컷 프롬프트</button>
+          <button class="gen-tab" role="tab" data-tab="planner" aria-selected="false">생성의 시선 컷 플래너</button>
+        </div>
+
+        <div class="gen-panel" data-panel="photo">
+          <div class="preset-buttons" id="p-presets"></div>
+          <div class="form-grid">
+            <div class="field"><label for="p-subject">주제 · 피사체 (영어 권장)</label><input type="text" id="p-subject" placeholder="예: an old lighthouse keeper mending a net"></div>
+            <div class="field"><label for="p-scene">장면 · 장소 · 시간</label><input type="text" id="p-scene" placeholder="예: on a wet stone pier at dawn"></div>
+            <div class="field"><label for="p-style">스타일 · 매체</label><select id="p-style"></select></div>
+            <div class="field"><label for="p-shot">샷 사이즈</label><select id="p-shot"></select></div>
+            <div class="field"><label for="p-angle">앵글 · 시점</label><select id="p-angle"></select></div>
+            <div class="field"><label for="p-lens">렌즈 · 초점거리</label><select id="p-lens"></select></div>
+            <div class="field"><label for="p-aperture">조리개 · 심도</label><select id="p-aperture"></select></div>
+            <div class="field"><label for="p-shutter">셔터 · 움직임</label><select id="p-shutter"></select></div>
+            <div class="field"><label for="p-light">조명</label><select id="p-light"></select></div>
+            <div class="field"><label for="p-camera">카메라 바디</label><select id="p-camera"></select></div>
+            <div class="field"><label for="p-film">필름 · 프로세스</label><select id="p-film"></select></div>
+            <div class="field"><label for="p-composition">구도</label><select id="p-composition"></select></div>
+          </div>
+          <div class="field"><label>광학 효과 (한두 개만)</label><div class="checks" id="p-effects"></div></div>
+          <h3>파라미터</h3>
+          <div class="form-grid">
+            <div class="field"><label for="p-ar">--ar 비율</label><select id="p-ar"></select></div>
+            <div class="field"><label for="p-s">--s 스타일라이즈 (0–1000, 기본 100)</label><input type="number" id="p-s" min="0" max="1000" value="100"></div>
+            <div class="field"><label for="p-c">--c 카오스 (0–100)</label><input type="number" id="p-c" min="0" max="100" value="0"></div>
+            <div class="field"><label for="p-exp">--exp (0–100, 10–25 권장)</label><input type="number" id="p-exp" min="0" max="100" value="0"></div>
+            <div class="field"><label for="p-sref">--sref (URL 또는 코드)</label><input type="text" id="p-sref" placeholder="비우면 생략"></div>
+            <div class="field"><label for="p-no">--no (제외 단어)</label><input type="text" id="p-no" placeholder="예: text, watermark"></div>
+          </div>
+          <div class="checks">
+            <label><input type="checkbox" id="p-raw" checked> --raw (프롬프트 충실)</label>
+            <label><input type="checkbox" id="p-hd"> --hd (2048px)</label>
+            <label><input type="checkbox" id="p-niji"> --niji 7 (만화·일러스트)</label>
+          </div>
+          <div class="btn-row">
+            <button class="btn" id="p-generate">프롬프트 생성</button>
+            <button class="btn secondary" id="p-copy">복사</button>
+            <button class="btn ghost" id="p-reset">초기화</button>
+          </div>
+          <div class="output">
+            <h4>생성된 프롬프트 (클릭하면 복사)</h4>
+            <pre id="p-out" title="클릭하면 복사"></pre>
+            <p class="ko" id="p-out-ko"></p>
+            <p class="ko" id="p-warn"></p>
+          </div>
+        </div>
+
+        <div class="gen-panel" data-panel="planner" hidden>
+          <div class="preset-buttons" id="g-presets"></div>
+          <div class="form-grid">
+            <div class="field"><label for="g-subject">주제</label><input type="text" id="g-subject" placeholder="예: 10년 만에 겨울 기차역에서 재회한 두 사람"><span class="hint">컷 플랜은 한국어로 출력된다. 컷별 Niji 프롬프트에는 이 주제가 그대로 들어가므로, 미드저니용이면 영어로 쓰는 편이 안정적이다.</span></div>
+            <div class="field"><label for="g-count">컷 수 (기본 4~8)</label><input type="number" id="g-count" min="1" max="12" value="6"></div>
+            <div class="field"><label for="g-format">형식</label><select id="g-format"><option>흑백 인쇄 원고</option><option>스팟 컬러</option><option>풀컬러</option></select></div>
+            <div class="field"><label for="g-order">읽기 순서</label><select id="g-order"><option value="ko">한국식 (왼쪽→오른쪽)</option><option value="jp">일본식 (오른쪽→왼쪽)</option></select></div>
+            <div class="field"><label for="g-style">작화</label><select id="g-style"><option>일본 만화</option><option>한국 웹툰</option><option>방드 데시네</option><option>혼합</option></select></div>
+          </div>
+          <p class="hint">역할을 고르면 그 역할에 맞는 기본 카메라가 채워진다. 장면이 요구하는 대로 고쳐라. 같은 조합의 반복, 특수 앵글 과다, 말풍선 초과는 생성 시 경고한다.</p>
+          <div class="panel-list" id="g-panels"></div>
+          <div class="btn-row">
+            <button class="btn" id="g-generate">컷 플랜 생성</button>
+            <button class="btn secondary" id="g-copy">플랜 복사 (GPT·Gemini용)</button>
+            <button class="btn secondary" id="g-copy-mj">컷별 Niji 프롬프트 복사</button>
+            <button class="btn ghost" id="g-reset">초기화</button>
+          </div>
+          <div class="output">
+            <h4>생성의 시선 · 컷 플랜</h4>
+            <pre id="g-out"></pre>
+            <h4>컷별 미드저니 프롬프트 (Niji 7)</h4>
+            <pre id="g-out-mj"></pre>
+            <p class="ko" id="g-warn"></p>
+          </div>
+        </div>
+
+        <div class="history" id="history"></div>
+      </section>
+
+      <section class="card" id="tips">
+        <h2><span class="num">14</span>팁과 피할 것</h2>
+        <h3>하라</h3>
+        <ul>
+          <li>이름이 있는 것은 이름으로 불러라. "부드러운 빛"보다 <span class="kw">overcast soft light</span>, "인물 렌즈"보다 <span class="kw">85mm f/1.4</span>가 정확하다.</li>
+          <li>사진가·감독 이름은 스타일 앵커로 쓸 수 있다. 다만 배우 이름 대신 외형을 묘사하라.</li>
+          <li>구도 탐색은 <code>--draft</code>와 <code>--c 30</code>으로, 결정 후 <code>--hd</code>로 정식 생성하라.</li>
+          <li>인물이 여러 컷에 나오면 V8.2의 Edit Model(<code>--edit</code>)로 같은 인물을 참조하라.</li>
+          <li>출판 원고의 글자는 모델이 아니라 당신이 책임진다. 글자가 중요한 컷은 생성 후 레터링을 후편집하라.</li>
+        </ul>
+        <h3>피하라</h3>
+        <ul>
+          <li>키워드 더미: <span class="kw">masterpiece, 8k, ultra detailed</span>는 카메라를 설명하지 않는다.</li>
+          <li>앵글 목록 채우기: 한 장면에 어안·더치·웜아이를 동시에 넣으면 장면이 사라진다.</li>
+          <li>충돌하는 지시: 얕은 심도(f/1.4)와 전체 선명(deep focus)을 함께 쓰지 마라.</li>
+          <li>이유 없는 반복: 같은 샷·앵글·렌즈 조합이 연속되면 리듬인지 실수인지 스스로 답하라.</li>
+          <li>버전 혼동: <code>--q</code>, <code>--oref</code>, <code>--cref</code>는 V8.2에서 동작하지 않는다.</li>
+        </ul>
+      </section>
+
+      <section class="card" id="changelog">
+        <h2><span class="num">15</span>갱신 노트 · 출처</h2>
+        <h3>v2 (2026-10-21)에서 바뀐 것</h3>
+        <ul>
+          <li>카메라 7종·렌즈 5종 목록 → 샷·앵글·렌즈·조리개·셔터·움직임·조명·바디·필름·프로세스·효과·구도 150여 개 어휘(한국어·영어 병기).</li>
+          <li>「생성의 시선」 마스터 프롬프트의 카메라 원칙 5가지와 아홉 가지 시점의 매핑 표 추가.</li>
+          <li>생성기 v2: 12개 항목 + 파라미터 조립, 생성의 시선 체크(단어 수, 충돌, 빈 카메라). 컷 플래너 신설(역할별 기본 카메라, 말풍선·효과음, 반복 경고, 컷별 Niji 프롬프트).</li>
+          <li>미드저니 파라미터를 V8.2 기준으로 갱신. V7 전용·레거시 분리.</li>
+          <li>SVG 도해 3종(샷 사다리, 앵글 배치, 초점거리 압축), 다크 모드, 모바일 레이아웃.</li>
+        </ul>
+        <h3>출처</h3>
+        <ul class="sources">
+          <li><a href="https://docs.midjourney.com/hc/en-us/articles/32199405667853-Version" target="_blank" rel="noopener">Midjourney Docs — Version</a> (V8.2 기본 모델, V8.1·V8.0·V7·Niji 7 출시 시점, HD/SD)</li>
+          <li><a href="https://blakecrosley.com/guides/midjourney" target="_blank" rel="noopener">Blake Crosley — Midjourney 8.2 Guide</a> (파라미터 범위, Edit Model, 프롬프트 작성 조언, 2026-09-22)</li>
+          <li><a href="https://www.gradually.ai/en/midjourney-parameters/" target="_blank" rel="noopener">Gradually — Midjourney Parameters</a> (V8.2 파라미터 지원 여부, 2026-09-09)</li>
+          <li><a href="https://epidemicsound.com/blog/different-camera-shots" target="_blank" rel="noopener">Epidemic Sound — 30+ camera shots</a> (샷 사이즈·앵글·움직임 정의)</li>
+          <li><a href="https://digital-photography-school.com/5-important-focal-lengths-to-know-and-the-benefits-of-each/" target="_blank" rel="noopener">Digital Photography School — focal lengths</a> (초점거리별 성격)</li>
+          <li><a href="https://www.ppa.com/ppmag/articles/9-types-of-portrait-lighting" target="_blank" rel="noopener">PPA — 9 types of portrait lighting</a> (인물 조명 패턴)</li>
+          <li><a href="https://www.uniquephoto.com/photoinsider/film-stock-showdown-color-grain-and-performance-for-portraits-landscapes-and-street-photography" target="_blank" rel="noopener">Unique Photo — Film stock showdown</a> (포트라·골드·시네스틸 성격)</li>
+          <li><a href="https://www.reddigitalcinema.com/red-101/anamorphic-lenses" target="_blank" rel="noopener">RED 101 — Anamorphic lenses</a> (스퀴즈, 타원 보케, 수평 플레어)</li>
+          <li><a href="https://wikidocs.net/337483" target="_blank" rel="noopener">위키독스 — 카메라 용어 사전</a> (한국어 용어 표기)</li>
+        </ul>
+      </section>
     </main>
+  </div>
 
-    <footer>
-        <p>© 2024 AI 사진 가이드. All rights reserved.</p>
-    </footer>
+  <footer class="site-footer">
+    <p>© 2024–2026 달의이성 Reasonofmoon · <a href="https://devlog.moonlang.com/">Reasonofmoon Devlog</a> · 2025-01-28 초판, 2026-10-21 v2</p>
+  </footer>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
