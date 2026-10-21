@@ -294,7 +294,7 @@
     }
     tabs.forEach((t) => t.addEventListener('click', () => activate(t.dataset.tab)));
     const q = new URLSearchParams(location.search).get('mode');
-    activate(q === 'planner' || q === 'photo' ? q : store.get('gs-tab', 'photo'));
+    activate(['planner', 'photo', 'illust'].includes(q) ? q : store.get('gs-tab', 'photo'));
   }
 
   // ---------- 사진·컷 프롬프트 생성기 ----------
@@ -524,10 +524,89 @@
     render(defaultPanels(6));
   }
 
+  // ---------- 원서 삽화 모드 (생성의 시선 × 카메라 가이드 맞춤판) ----------
+  const ILLUST_PRESETS = [
+    { name: '등대지기의 새벽 (설정샷)', book: 'The Lighthouse Keeper', chapter: 1, scene: 'a girl mending a fishing net on a wet stone pier at dawn while gulls circle the lighthouse', card: '12-year-old girl, short dark hair tied back, oversized grey wool sweater, rolled trousers, bare feet, thin and quick', role: 'establish', use: 'chapter', model: 'niji', format: 'bw', sref: '' },
+    { name: '열쇠 (인서트)', book: 'The Lighthouse Keeper', chapter: 2, scene: 'a small brass key lying on a wet stone step, seen from directly above', card: '', role: 'insert', use: 'chapter', model: 'gpt', format: 'bw', sref: '' },
+    { name: '회차 요약 4컷', book: 'The Lighthouse Keeper', chapter: 4, scene: 'the storm reaches the pier / the girl rows toward the sandbar / the keeper shouts from the tower / the empty boat drifts at dawn', card: '12-year-old girl, short dark hair tied back, oversized grey wool sweater; the keeper: tall, white beard, oilskin coat', role: 'establish', use: 'strip', model: 'niji', format: 'bw', sref: '' },
+    { name: '11월 포스터', book: 'The Lighthouse Keeper', chapter: 0, scene: 'a lighthouse on a rocky pier at blue hour, one small figure walking toward it with a lantern', card: '', role: 'establish', use: 'poster', model: 'gpt', format: 'color', sref: '' }
+  ];
+
+  function setupIllustration() {
+    const b = { book: $('#b-book'), chapter: $('#b-chapter'), scene: $('#b-scene'), card: $('#b-card'), role: $('#b-role'), use: $('#b-use'), model: $('#b-model'), format: $('#b-format'), sref: $('#b-sref'), out: $('#b-out'), outKo: $('#b-out-ko'), warn: $('#b-warn') };
+    if (!b.book) return;
+    b.role.innerHTML = DATA.roles.filter((r) => r.v !== 'climax').map((r) => `<option value="${r.v}">${esc(r.ko)}</option>`).join('');
+    const pb = $('#b-presets');
+    pb.innerHTML = ILLUST_PRESETS.map((p, i) => `<button class="preset-btn" data-preset="${i}">${esc(p.name)}</button>`).join('');
+    $$('[data-preset]', pb).forEach((btn) => btn.addEventListener('click', () => { const p = ILLUST_PRESETS[+btn.dataset.preset]; b.book.value = p.book; b.chapter.value = p.chapter || ''; b.scene.value = p.scene; b.card.value = p.card; b.role.value = p.role; b.use.value = p.use; b.model.value = p.model; b.format.value = p.format; b.sref.value = p.sref; generate(); }));
+
+    const STRIP_ROLES = ['establish', 'action', 'reaction', 'afterglow'];
+    const FORBIDDEN = /(삽화가|illustrator|illustrated by|표지|cover art|영화|movie|film version|netflix|disney|ghibli|pixar|in the style of [A-Z])/i;
+
+    function camOf(roleKey) { const r = DATA.roles.find((x) => x.v === roleKey) || DATA.roles[0]; return r.d; }
+    function camEn(d) { return [d.shot, d.angle, d.lens, d.light].filter(Boolean).join(', '); }
+    function camKo(d) { return [koOf(DATA.shots, d.shot), koOf(DATA.angles, d.angle), koOf(DATA.lenses, d.lens), koOf(DATA.lighting, d.light)].filter(Boolean).join(', '); }
+
+    function generate() {
+      const book = b.book.value.trim(); const scene = b.scene.value.trim(); const card = b.card.value.trim();
+      const chapter = b.chapter.value.trim(); const use = b.use.value; const model = b.model.value; const format = b.format.value;
+      if (!book || !scene) { b.warn.textContent = '책 제목과 장면을 입력하세요.'; (book ? b.scene : b.book).focus(); return; }
+      const warns = [];
+      if (FORBIDDEN.test(scene + ' ' + card + ' ' + book)) warns.push('원작 삽화·표지·영화·특정 작가 스타일을 가리키는 말이 있습니다. 규약: 원작 삽화와 영화 디자인을 참조하지 않는다.');
+      if (use !== 'poster' && !card) warns.push('인물 외형 카드가 비어 있습니다. 책 한 권 안에서 인물이 같아 보이려면 카드가 필요합니다.');
+      if (use === 'poster' && format !== 'color') warns.push('포스터는 풀컬러가 기본입니다.');
+      if (use === 'chapter' && format === 'color') warns.push('챕터 삽화는 흑백 선화 + 회색 톤 2단계가 기본입니다(인쇄 비용).');
+
+      const material = format === 'color' ? 'full color illustration, flat colors with soft shading' : 'black and white line art with two-step grey tone, clean ink lines, no cross-hatching noise';
+      const common = ['original character design (do not reference any published illustration, book cover or film adaptation)', 'no text, no letters, no captions, no speech bubbles, no watermark', 'no paper texture, no vintage filter'];
+      let en = ''; let ko = '';
+      const ar = use === 'poster' ? '2:3' : use === 'strip' ? '2:3' : '4:5';
+      const params = [`--ar ${ar}`];
+      if (model === 'niji') params.push('--niji 7');
+      params.push('--raw'); if (b.sref.value.trim()) params.push(`--sref ${b.sref.value.trim()}`); params.push('--no text, letters, watermark, signature');
+
+      if (use === 'strip') {
+        const scenes = scene.split('/').map((s) => s.trim()).filter(Boolean);
+        if (scenes.length !== 4) warns.push(`4컷 스트립은 장면 4개를 '/'로 나눠 입력합니다 (지금 ${scenes.length}개).`);
+        const panels = STRIP_ROLES.map((r, i) => ({ role: r, scene: scenes[i] || `(scene ${i + 1})`, d: camOf(r) }));
+        en = [`four-panel vertical comic strip for a student reading workbook, session recap of "${book}"${chapter ? ` (chapters ${chapter})` : ''}, ${material}`,
+          ...panels.map((p, i) => `panel ${i + 1} (${p.role}): ${p.scene}, ${camEn(p.d)}`),
+          card ? `characters consistent in every panel: ${card}` : '', ...common, 'thin panel borders, even gutters, white margin around the strip'].filter(Boolean).join('; ') + ' ' + params.join(' ');
+        ko = ['[원서 삽화 · 생성의 시선 맞춤판 · 회차 요약 4컷 스트립]', `책: ${book}${chapter ? ` / 범위: ${chapter}장` : ''}`, `형식: ${format === 'color' ? '풀컬러' : '흑백 선화 + 회색 톤 2단계'} / 세로 4컷, 얇은 테두리, 균일한 간격, 바깥 여백`, '',
+          ...panels.map((p, i) => `컷 ${i + 1} (${koOf(DATA.roles, p.role)}): ${p.scene}. 카메라: ${camKo(p.d)}.`), '',
+          card ? `인물 외형 카드(모든 컷에서 동일): ${card}` : '인물 외형 카드: 없음(인물이 없는 장면만)', '',
+          '규칙:', '- 원작 삽화·표지·영화 캐릭터 디자인을 참조하지 않는다. 인물은 위 외형 카드만 따른다.', '- 이미지에 글자, 말풍선, 효과음, 캡션을 넣지 않는다. 글자는 조판에서 얹는다.',
+          '- 완성도 약 120%. 펜 마감, 밑선·구조선 없음. 강조하지 않을 부분은 선 굵기와 톤으로 힘을 뺀다.', '- 종이 질감·빈티지 필터 금지. 4컷의 카메라는 위 지정을 따르며 특수 앵글은 한 컷에만 쓴다.'].join('\n');
+      } else if (use === 'poster') {
+        const d = camOf('establish');
+        en = [`${material}, promotional poster illustration for a Saturday reading class on "${book}"`, scene, camEn(d), card ? `character: ${card}` : '',
+          'leave clean empty space across the top third and bottom band for title typography added later', ...common].filter(Boolean).join(', ') + ' ' + params.join(' ');
+        ko = ['[원서 삽화 · 생성의 시선 맞춤판 · 홍보 포스터]', `책: ${book}`, `장면: ${scene}`, `카메라: ${camKo(d)}`, `형식: 풀컬러 일러스트. 위 1/3과 아래 띠는 제목·날짜·가격을 나중에 얹도록 비워 둔다.`,
+          card ? `인물 외형 카드: ${card}` : '', '', '규칙:', '- 원작 삽화·표지·영화 캐릭터 디자인을 참조하지 않는다.', '- 이미지에 글자를 넣지 않는다. 글자는 조판 단계에서 얹는다.', '- 종이 질감·빈티지 필터 금지. 완성도 약 120%.'].filter((l) => l !== '').join('\n');
+      } else {
+        const d = camOf(b.role.value);
+        en = [`${material}, chapter illustration for a student reading workbook, "${book}"${chapter ? ` chapter ${chapter}` : ''}`, scene, camEn(d), card ? `character: ${card}` : '',
+          'generous white space on one side for student notes', ...common].filter(Boolean).join(', ') + ' ' + params.join(' ');
+        ko = ['[원서 삽화 · 생성의 시선 맞춤판 · 챕터 삽화 1컷]', `책: ${book}${chapter ? ` / 장: ${chapter}` : ''}`, `장면: ${scene}`, `컷 역할: ${koOf(DATA.roles, b.role.value)} / 카메라: ${camKo(d)}`,
+          `형식: ${format === 'color' ? '풀컬러' : '흑백 선화 + 회색 톤 2단계'}. 한쪽에 학생 메모용 여백을 남긴다.`, card ? `인물 외형 카드: ${card}` : '인물 외형 카드: 없음', '',
+          '규칙:', '- 원작 삽화·표지·영화 캐릭터 디자인을 참조하지 않는다. 인물은 위 외형 카드만 따른다.', '- 이미지에 글자, 캡션, 말풍선을 넣지 않는다.', '- 완성도 약 120%. 펜 마감, 밑선·구조선 없음. 종이 질감·빈티지 필터 금지.', '- 장면은 해당 장에 실제로 있는 사건이어야 한다. 원작 삽화와 다른 구도로 그린다.'].join('\n');
+      }
+      b.out.textContent = en; b.outKo.textContent = ko; b.warn.textContent = warns.join(' ');
+      history.add(model === 'niji' ? en : ko);
+    }
+
+    $('#b-generate').addEventListener('click', generate);
+    $('#b-copy').addEventListener('click', async (e) => { if (b.out.textContent && await copyText(b.out.textContent)) flash(e.currentTarget, '복사됨'); });
+    $('#b-copy-ko').addEventListener('click', async (e) => { if (b.outKo.textContent && await copyText(b.outKo.textContent)) flash(e.currentTarget, '복사됨'); });
+    $('#b-reset').addEventListener('click', () => { ['book', 'chapter', 'scene', 'card', 'sref'].forEach((k) => { b[k].value = ''; }); b.role.value = 'establish'; b.use.value = 'chapter'; b.model.value = 'niji'; b.format.value = 'bw'; b.out.textContent = ''; b.outKo.textContent = ''; b.warn.textContent = ''; });
+    b.use.addEventListener('change', () => { b.format.value = b.use.value === 'poster' ? 'color' : 'bw'; });
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     setupTabs();
     setupPhoto();
     setupPlanner();
+    setupIllustration();
     history.render();
   });
 })();
